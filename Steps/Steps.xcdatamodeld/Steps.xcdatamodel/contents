@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Objects" representedClassName="Objects" syncable="YES" codeGenerationType="class">
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="objectRoutes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Routes" inverseName="object" inverseEntity="Routes" syncable="YES"/>
+    </entity>
+    <entity name="Points" representedClassName="Points" syncable="YES" codeGenerationType="class">
+        <attribute name="isMarkerPresents" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="magneticFieldX" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="magneticFieldY" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="magneticFieldZ" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numberOfSteps" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pressure" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routes" inverseName="routePoints" inverseEntity="Routes" syncable="YES"/>
+    </entity>
+    <entity name="Routes" representedClassName="Routes" syncable="YES" codeGenerationType="class">
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="object" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Objects" inverseName="objectRoutes" inverseEntity="Objects" syncable="YES"/>
+        <relationship name="routePoints" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Points" inverseName="route" inverseEntity="Points" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Objects" positionX="-312.23828125" positionY="-194.0859375" width="128" height="88"/>
+        <element name="Routes" positionX="-98.38671875" positionY="-87.56640625" width="128" height="103"/>
+        <element name="Points" positionX="124.59765625" positionY="-35.47265625" width="128" height="193"/>
+    </elements>
 </model>

@@ -7,7 +7,10 @@
 import UIKit
 
 class PointsTableViewController: UITableViewController {
-
+    
+    
+    @IBOutlet var notFoundView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -15,6 +18,8 @@ class PointsTableViewController: UITableViewController {
         
         let addNewRouteButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPoint(_:)))
         self.navigationItem.rightBarButtonItem = addNewRouteButton
+        self.tableView.backgroundColor = .white
+        self.tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,7 +39,18 @@ class PointsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (RouteBusinessRules.selectedRoute?.mutableSetValue(forKey: "routePoints"))?.count ?? 0
+        if let data = RouteBusinessRules.selectedRoute?.mutableSetValue(forKey: "routePoints") {
+            if data.count == 0 {
+                self.tableView.backgroundView = self.notFoundView
+                return 0
+            } else {
+                self.tableView.backgroundView = nil
+                return data.count
+            }
+        } else {
+            self.tableView.backgroundView = self.notFoundView
+            return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

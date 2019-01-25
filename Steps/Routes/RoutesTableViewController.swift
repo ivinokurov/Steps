@@ -13,7 +13,10 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
     var filteredAllRoutes: [NSManagedObject]?
     let searchController = UISearchController(searchResultsController: nil)
     var cancelWasClicked: Bool = false
-
+    
+    
+    @IBOutlet var notFoundView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +26,8 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
         let addNewRouteButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewRoute(_:)))
         self.navigationItem.rightBarButtonItem = addNewRouteButton
         self.navigationItem.searchController = self.searchController
-    //    self.navigationItem.largeTitleDisplayMode = .never
+        self.tableView.backgroundColor = .white
+        self.tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,7 +39,9 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
             self.allRoutes = RouteBusinessRules.getObjectAllRoutes(routeObject: objects)
         }
     
-        self.tableView.reloadData()
+        if !self.isFiltering() {
+            self.tableView.reloadData()
+        }
     }
     
     func getDataToLoadTable() -> [NSManagedObject]? {
@@ -78,7 +84,18 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.getDataToLoadTable()?.count ?? 0
+        if let data = self.getDataToLoadTable() {
+            if data.count == 0 {
+                self.tableView.backgroundView = self.notFoundView
+                return 0
+            } else {
+                self.tableView.backgroundView = nil
+                return data.count
+            }
+        } else {
+            self.tableView.backgroundView = self.notFoundView
+            return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,8 +132,10 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
                 let desc = self.getDataToLoadTable()?[indexPath.row].value(forKeyPath: "desc") as? String
             
                 RouteBusinessRules.deleteRoute(routeObject: ObjectBusinessRules.selectedObject!, routeName: name!, routeDescription: desc)
+            
+                self.allRoutes = RouteBusinessRules.getObjectAllRoutes(routeObject: ObjectBusinessRules.selectedObject!)
         
-                 self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
             
                 success(true)
         })

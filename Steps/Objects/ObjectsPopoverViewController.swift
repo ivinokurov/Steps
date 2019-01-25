@@ -91,7 +91,7 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
                 if ObjectBusinessRules.isObjectHasPoints(name: self.objectName!) {
                     self.movementViewController?.mapView.isHidden = false
                 } else {
-                    CommonBusinessRules.showOneButtonAlert(controllerInPresent: self.movementViewController!, alertTitle: "Выбор объекта", alertMessage: "Для объектна не сформированы маршруты!", alertButtonHandler: nil)
+                    CommonBusinessRules.showOneButtonAlert(controllerInPresent: self.movementViewController!, alertTitle: "Выбор объекта", alertMessage: "Для этого объекта маршруты не сформированы!", alertButtonHandler: nil)
                     self.movementViewController?.mapView.isHidden = true
                 }
         //    })

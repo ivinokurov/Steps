@@ -47,14 +47,14 @@ class CommonBusinessRules {
         viewController.navigationController?.navigationBar.tintColor = .white
         viewController.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         viewController.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        viewController.navigationController?.navigationBar.isTranslucent = false
+        viewController.navigationController?.navigationBar.isTranslucent = true
         
         let backButton = UIBarButtonItem()
         backButton.title = "Назад"
         viewController.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         viewController.navigationController?.navigationItem.largeTitleDisplayMode = .automatic
-        viewController.navigationController?.navigationBar.prefersLargeTitles = true
-        viewController.edgesForExtendedLayout = .all
+        viewController.navigationController?.navigationBar.prefersLargeTitles = false
+        viewController.view.backgroundColor = .white
         viewController.navigationController?.view.backgroundColor = .white
     }
     

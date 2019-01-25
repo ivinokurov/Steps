@@ -14,6 +14,8 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     let searchController = UISearchController(searchResultsController: nil)
     var cancelWasClicked: Bool = false
     
+    @IBOutlet var notFoundView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +23,8 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
         CommonBusinessRules.customizeNavigationBar(coloredController: self)
         
         self.navigationItem.searchController = self.searchController
+        self.tableView.backgroundColor = .white
+        self.tableView.tableFooterView = UIView()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -60,7 +64,10 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
         
         self.allObjects = ObjectBusinessRules.getAllObjects()
-        self.tableView.reloadData()
+        
+        if !self.isFiltering() {
+            self.tableView.reloadData()
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -68,7 +75,18 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.getDataToLoadTable()?.count ?? 0
+        if let data = self.getDataToLoadTable() {
+            if data.count == 0 {
+                self.tableView.backgroundView = self.notFoundView
+                return 0
+            } else {
+                self.tableView.backgroundView = nil
+                return data.count
+            }
+        } else {
+            self.tableView.backgroundView = self.notFoundView
+            return 0
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

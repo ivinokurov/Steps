@@ -48,7 +48,9 @@
                             <outlet property="delegate" destination="wZl-i0-1rC" id="s7v-5d-f8m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="МАРШРУТЫ" id="Owy-J4-KlF"/>
+                    <navigationItem key="navigationItem" title="МАРШРУТЫ" id="Owy-J4-KlF">
+                        <barButtonItem key="backBarButtonItem" title="Назад" id="HJX-Fw-cbQ"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="notFoundView" destination="HDM-yl-Ua8" id="Dlr-4E-hBC"/>
                         <segue destination="xTQ-WA-bWl" kind="show" identifier="addNewRoute" id="DF4-tG-ZGw"/>
@@ -91,7 +93,7 @@ IAoKA
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.9882352941176471" green="0.98766060469796946" blue="0.98766060469796946" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="wGq-zq-SY1" firstAttribute="bottom" secondItem="Zt5-df-Bnp" secondAttribute="bottom" constant="55" id="YS5-I0-wyZ"/>
                         <constraint firstItem="Zt5-df-Bnp" firstAttribute="top" secondItem="wGq-zq-SY1" secondAttribute="top" constant="55" id="hMg-eo-dBg"/>
@@ -398,7 +400,7 @@ IAoKA
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="2wU-IE-QJM" firstAttribute="top" secondItem="vIm-XS-bBJ" secondAttribute="top" constant="55" id="PpK-iI-NfG"/>
                         <constraint firstItem="vIm-XS-bBJ" firstAttribute="bottom" secondItem="2wU-IE-QJM" secondAttribute="bottom" constant="55" id="coy-JR-H16"/>
@@ -455,6 +457,7 @@ IAoKA
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ОБЪЕКТЫ" largeTitleDisplayMode="always" id="6B9-7q-WnN">
+                        <barButtonItem key="backBarButtonItem" title="Назад" id="1al-o2-dq9"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="2Jz-TM-uJZ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -630,7 +633,7 @@ Cgo
         <scene sceneID="Q4m-9F-0Te">
             <objects>
                 <splitViewController extendedLayoutIncludesOpaqueBars="YES" id="WjP-ly-vFm" customClass="SplitViewController" customModule="Steps" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="СФОРМИРОВАТЬ" image="Location" selectedImage="LocationFilled" id="vuN-tN-Hct"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="СФОРМИРОВАТЬ" image="Location" selectedImage="LocationFilled" id="vuN-tN-Hct"/>
                     <connections>
                         <segue destination="v3G-TF-1qh" kind="relationship" relationship="masterViewController" id="Oyc-Fb-sgU"/>
                         <segue destination="2uG-OE-g1l" kind="relationship" relationship="detailViewController" id="xhE-pf-3je"/>
@@ -643,9 +646,9 @@ Cgo
         <!--НАСТРОЙКИ-->
         <scene sceneID="MBv-Lh-T84">
             <objects>
-                <tableViewController id="ycZ-Vw-Kv7" customClass="SettingsTableViewController" customModule="Steps" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="ycZ-Vw-Kv7" customClass="SettingsTableViewController" customModule="Steps" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="4SM-vN-1ua">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -764,10 +767,126 @@ Cgo
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="НАСТРОЙКИ" largeTitleDisplayMode="always" id="gz8-yR-1uj"/>
+                    <connections>
+                        <outlet property="bkgView" destination="5lN-qU-Cel" id="iNr-Gl-zPx"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qab-CC-XLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view alpha="0.40000000000000002" contentMode="scaleToFill" id="5lN-qU-Cel">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <viewLayoutGuide key="safeArea" id="aFs-c1-Scx"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="-322" y="951"/>
+        </scene>
+        <!--Colors View Controller-->
+        <scene sceneID="0vl-BG-fov">
+            <objects>
+                <viewController storyboardIdentifier="popoverColorControllerId" id="5AS-Ko-Ced" customClass="ColorsViewController" customModule="Steps" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w3U-9l-PLk">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="180"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wh3-fG-Yat">
+                                <rect key="frame" x="275" y="4" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Delete"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="dismissViewController:" destination="5AS-Ko-Ced" eventType="touchUpInside" id="cPg-9T-hGY"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ЗАГОЛОВОК" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyY-kO-Wab">
+                                <rect key="frame" x="33" y="4" width="234" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ixb-MR-KFL">
+                                <rect key="frame" x="16" y="51" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.92156862750000001" green="0.47058823529999999" blue="0.48627450979999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="chooseColor:" destination="5AS-Ko-Ced" eventType="touchUpInside" id="Osz-iF-adV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Atc-kW-XXZ">
+                                <rect key="frame" x="74" y="51" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.98039215690000003" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="chooseColor:" destination="5AS-Ko-Ced" eventType="touchUpInside" id="SOO-PM-uCy"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CheckMark" translatesAutoresizingMaskIntoConstraints="NO" id="e8v-04-8Ik">
+                                <rect key="frame" x="31" y="66" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CheckMark" translatesAutoresizingMaskIntoConstraints="NO" id="nzq-NY-J4n">
+                                <rect key="frame" x="89" y="66" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Fy-su-0Qu">
+                                <rect key="frame" x="16" y="134" width="268" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="nf9-t1-AQn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="ВЫБРАТЬ">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1Fy-su-0Qu" firstAttribute="leading" secondItem="HIn-au-LBm" secondAttribute="leading" constant="16" id="DXS-T6-htQ"/>
+                            <constraint firstItem="HIn-au-LBm" firstAttribute="bottom" secondItem="1Fy-su-0Qu" secondAttribute="bottom" constant="16" id="Gwn-SI-VtG"/>
+                            <constraint firstItem="HIn-au-LBm" firstAttribute="trailing" secondItem="1Fy-su-0Qu" secondAttribute="trailing" constant="16" id="g6y-N6-SWD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HIn-au-LBm"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <size key="freeformSize" width="300" height="180"/>
+                    <connections>
+                        <outlet property="closeButton" destination="Wh3-fG-Yat" id="ZaD-lO-sWQ"/>
+                        <outlet property="colorsTitleLabel" destination="wyY-kO-Wab" id="qGr-8A-3gO"/>
+                        <outlet property="setColorButton" destination="1Fy-su-0Qu" id="CHV-J4-t7X"/>
+                        <outletCollection property="colorButtons" destination="Ixb-MR-KFL" collectionClass="NSMutableArray" id="vmu-So-CJU"/>
+                        <outletCollection property="colorButtons" destination="Atc-kW-XXZ" collectionClass="NSMutableArray" id="se1-3v-QHC"/>
+                        <outletCollection property="colorCheckMarks" destination="e8v-04-8Ik" collectionClass="NSMutableArray" id="hF9-GE-cmz"/>
+                        <outletCollection property="colorCheckMarks" destination="nzq-NY-J4n" collectionClass="NSMutableArray" id="j3C-Hd-wx5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="foi-vK-tgS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="433.60000000000002" y="769.11544227886066"/>
         </scene>
         <!--ДВИЖЕНИЕ-->
         <scene sceneID="c39-92-taY">
@@ -805,7 +924,7 @@ Cgo
         <!--Objects Popover View Controller-->
         <scene sceneID="OxE-eT-ewC">
             <objects>
-                <viewController storyboardIdentifier="popoverControllerId" id="TgW-4h-KC5" customClass="ObjectsPopoverViewController" customModule="Steps" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="popoverObjectsControllerId" id="TgW-4h-KC5" customClass="ObjectsPopoverViewController" customModule="Steps" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HnG-he-Gh0">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="271"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -919,7 +1038,7 @@ Cgo
         <scene sceneID="rTH-Xk-ihO">
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="uC0-pU-9NS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="НАСТРОЙКИ" image="Adjust" selectedImage="AdjustFilled" id="6BA-Rw-oTs"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="НАСТРОЙКИ" image="Adjust" selectedImage="AdjustFilled" id="6BA-Rw-oTs"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
@@ -1048,7 +1167,9 @@ Cgo
                         <viewLayoutGuide key="safeArea" id="rgB-oq-jT0"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="НОВЫЙ МАРШРУТ" largeTitleDisplayMode="always" id="ZfC-RH-BtN"/>
+                    <navigationItem key="navigationItem" title="НОВЫЙ МАРШРУТ" largeTitleDisplayMode="always" id="ZfC-RH-BtN">
+                        <barButtonItem key="backBarButtonItem" title="Назад" id="zTn-kM-En1"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="newRouteButton" destination="xga-jL-s7u" id="Pqv-iM-3aQ"/>
                         <outlet property="routeDescriptionTextView" destination="U19-ap-hWx" id="47Y-2i-MV5"/>
@@ -1217,6 +1338,8 @@ Cgo
         <image name="Adjust" width="37.5" height="37.5"/>
         <image name="AdjustFilled" width="37.5" height="37.5"/>
         <image name="Building" width="50" height="50"/>
+        <image name="CheckMark" width="37.5" height="37.5"/>
+        <image name="Delete" width="50" height="50"/>
         <image name="Flag" width="40" height="40"/>
         <image name="Location" width="37.5" height="37.5"/>
         <image name="LocationFilled" width="37.5" height="37.5"/>

@@ -13,6 +13,7 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     var filteredAllObjects: [NSManagedObject]?
     let searchController = UISearchController(searchResultsController: nil)
     var cancelWasClicked: Bool = false
+    var backFromChild: Bool = false     
     
     @IBOutlet var notFoundView: UIView!
     
@@ -55,7 +56,10 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
             (((object.value(forKeyPath: "name") as? String)?.lowercased().range(of: self.searchController.searchBar.text!.lowercased())) != nil)
             })
         }
-        self.tableView.reloadData()
+        if !self.backFromChild {
+            self.tableView.reloadData()
+        }
+        self.backFromChild = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +72,8 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
         if !self.isFiltering() {
             self.tableView.reloadData()
         }
+        
+        self.backFromChild = true
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

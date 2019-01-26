@@ -37,6 +37,12 @@ class CommonBusinessRules {
         view.layer.borderColor = UIColor.darkGray.cgColor
     }
     
+    class func drawControllerBorder(borderedController controller: UIViewController) {
+        controller.view.layer.borderWidth = 0.4
+        controller.view.layer.borderColor = CommonBusinessRules.bkgColor.cgColor
+        controller.view.layer.cornerRadius = 2
+    }
+    
     class func addTextEditPlaceholder(placeholderTextField textField: UITextField, placeholderText text: String) {
         textField.attributedPlaceholder = NSAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray,
              NSAttributedString.Key.font: UIFont.init(name: "Helvetica Neue", size: 16.0) as Any])                                                                

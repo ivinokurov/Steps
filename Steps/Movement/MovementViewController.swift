@@ -38,11 +38,12 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
         self.navigationItem.rightBarButtonItem = selectBuildingButton
         
         self.mapView.isHidden = true
+        self.dropDownView.movementViewController = self
         self.addDropDownView()
     }
     
     func addDropDownView() {
-        if let popoverViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popoverControllerId") as? ObjectsPopoverViewController {
+        if let popoverViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "popoverObjectsControllerId") as? ObjectsPopoverViewController {
             popoverViewController.movementViewController = self
             self.dropDownView.initDropDownView(dropDownViewController: popoverViewController, controller: self)
         }

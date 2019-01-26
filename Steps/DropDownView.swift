@@ -13,6 +13,7 @@ class DropDownView {
     var dropDownViewController: UIViewController?
     var dropDownView: UIView?
     var controller: UIViewController?
+    var movementViewController: MovementViewController?
     
     func initDropDownView(dropDownViewController: UIViewController?, controller: UIViewController?) {
         
@@ -20,13 +21,11 @@ class DropDownView {
         self.dropDownView = dropDownViewController?.view
         self.controller = controller
         
-        self.dropDownView?.layer.borderWidth = 0.2
-        self.dropDownView?.layer.borderColor = UIColor.lightGray.cgColor
-        self.dropDownView?.layer.cornerRadius = 2
+        CommonBusinessRules.drawControllerBorder(borderedController: dropDownViewController!)
 
         if self.dropDownView != nil {
             let dropDownViewWidth = self.dropDownView!.frame.size.width
-            let width: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 2 : dropDownViewWidth
+            let width: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 2 - (self.movementViewController?.navigationController?.navigationBar.frame.height)!: dropDownViewWidth
             let x: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 2 : 0
             let height: CGFloat = UIDevice.current.orientation.isLandscape ? 216 : 260
             self.dropDownView!.frame = CGRect(x: x, y: -height, width: width, height: height)

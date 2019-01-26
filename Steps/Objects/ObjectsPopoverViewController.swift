@@ -2,9 +2,7 @@
 //  ObjectsPopoverViewController.swift
 //  Steps
 //
-//  Created by Винокуров И.В. on 07/01/2019.
-//  Copyright © 2019 Винокуров И.В. All rights reserved.
-//
+
 
 import UIKit
 
@@ -86,15 +84,12 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     @IBAction func showMapObject(_ sender: UIButton) {
         if self.selectObjectHandler() {
             self.movementViewController?.navigationItem.title = self.objectName?.uppercased()
-        //    self.dismiss(animated: true, completion: {
-        //        () -> Void in
-                if ObjectBusinessRules.isObjectHasPoints(name: self.objectName!) {
-                    self.movementViewController?.mapView.isHidden = false
-                } else {
-                    CommonBusinessRules.showOneButtonAlert(controllerInPresent: self.movementViewController!, alertTitle: "Выбор объекта", alertMessage: "Для этого объекта маршруты не сформированы!", alertButtonHandler: nil)
-                    self.movementViewController?.mapView.isHidden = true
-                }
-        //    })
+            if ObjectBusinessRules.isObjectHasPoints(name: self.objectName!) {
+                self.movementViewController?.mapView.isHidden = false
+            } else {
+                CommonBusinessRules.showOneButtonAlert(controllerInPresent: self.movementViewController!, alertTitle: "Выбор объекта", alertMessage: "Для этого объекта маршруты не сформированы!", alertButtonHandler: nil)
+                self.movementViewController?.mapView.isHidden = true
+            }
         }
     }
 }

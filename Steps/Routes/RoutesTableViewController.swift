@@ -13,7 +13,7 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
     var filteredAllRoutes: [NSManagedObject]?
     let searchController = UISearchController(searchResultsController: nil)
     var cancelWasClicked: Bool = false
-    
+    var backFromChild: Bool = false 
     
     @IBOutlet var notFoundView: UIView!
     
@@ -58,7 +58,10 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
                 (((object.value(forKeyPath: "name") as? String)?.lowercased().range(of: self.searchController.searchBar.text!.lowercased())) != nil)
             })
         }
-        self.tableView.reloadData()
+        if !self.backFromChild {
+            self.tableView.reloadData()
+        }
+        self.backFromChild = false
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

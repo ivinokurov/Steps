@@ -66,4 +66,38 @@ class SettingsBusinessRules: NSObject {
             }
         }
     }
+    
+    class func getMarkerColorIndex() -> Int? {
+        let viewContext = CommonBusinessRules.getManagedView()
+        if viewContext != nil {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
+            fetchRequest.fetchLimit = 1
+            do {
+                let fetchResult = try viewContext!.fetch(fetchRequest) as! [NSManagedObject]
+                if fetchResult.count > 0 {
+                    return fetchResult.first!.value(forKeyPath: "markerColorIndex") as? Int
+                }
+            } catch let error as NSError {
+                NSLog("Ошибка чтения сущности Settings: " + error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
+    class func setMarkerColorIndex(markerColorIndex mrkColorIndex: Int32) {
+        let viewContext = CommonBusinessRules.getManagedView()
+        if viewContext != nil {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Settings")
+            fetchRequest.fetchLimit = 1
+            do {
+                let fetchResult = try viewContext!.fetch(fetchRequest) as! [NSManagedObject]
+                if fetchResult.count > 0 {
+                    fetchResult.first!.setValue(mrkColorIndex, forKey: "markerColorIndex")
+                    try viewContext!.save()
+                }
+            } catch let error as NSError {
+                NSLog("Ошибка изменения сущности Settings: " + error.localizedDescription)
+            }
+        }
+    }
 }

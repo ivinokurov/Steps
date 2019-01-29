@@ -32,7 +32,7 @@ class ColorsViewController: UIViewController {
     }
     
     func selectAnnotationColorButton() {
-        let selectedColorIndex = SettingsBusinessRules.getAnnotationColorIndex()
+        let selectedColorIndex = self.cellIndexPath!.row == 1 ? SettingsBusinessRules.getMarkerColorIndex() : SettingsBusinessRules.getAnnotationColorIndex()
         for colorButton in self.colorButtons {
             if colorButton.tag == selectedColorIndex {
                 colorButton.setImage(UIImage(named: "CheckMark"), for: .normal)
@@ -67,7 +67,11 @@ class ColorsViewController: UIViewController {
                 colorButton.setImage(UIImage(named: "CheckMark"), for: .normal)
                 colorButton.imageView?.tintColor = .white
                 
-                SettingsBusinessRules.setAnnotationColorIndex(annotationColorIndex: Int32(colorButton.tag))
+                if self.cellIndexPath?.row == 1 {
+                    SettingsBusinessRules.setMarkerColorIndex(markerColorIndex: Int32(colorButton.tag))
+                } else {
+                     SettingsBusinessRules.setAnnotationColorIndex(annotationColorIndex: Int32(colorButton.tag))
+                }
                 
                 self.settingsTableViewController?.showCurrentColor(indexPath: self.cellIndexPath!)
                 self.dismissController()

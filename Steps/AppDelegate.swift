@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        SettingsBusinessRules.addNewSettings(differentIconMarkers: false, markerColorIndex: 0, annotationColorIndex: 0, showCompass: false)
         return true
     }
 

@@ -40,7 +40,7 @@ class CommonBusinessRules {
     class func drawControllerBorder(borderedController controller: UIViewController) {
         controller.view.layer.borderWidth = 0.4
         controller.view.layer.borderColor = CommonBusinessRules.bkgColor.cgColor
-        controller.view.layer.cornerRadius = 2
+        controller.view.layer.cornerRadius = 6
     }
     
     class func addTextEditPlaceholder(placeholderTextField textField: UITextField, placeholderText text: String) {

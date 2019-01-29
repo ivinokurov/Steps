@@ -20,13 +20,14 @@ class ObjectsOnMapView: MKAnnotationView {
             mapsButton.setBackgroundImage(UIImage(named: "Maps-icon"), for: UIControl.State())
             rightCalloutAccessoryView = mapsButton
             
-            image = UIImage(named: "Flag")
+            image = UIImage(named: "LocationMarker")
             
             let detailLabel = UILabel()
             detailLabel.numberOfLines = 1
-            detailLabel.font = detailLabel.font.withSize(12)
+            detailLabel.font = detailLabel.font.withSize(13)
             detailLabel.text = objectOnMap.decription
             detailCalloutAccessoryView = detailLabel
+            detailLabel.textColor = SettingsBusinessRules.annotationColors[SettingsBusinessRules.getAnnotationColorIndex()!]
         }
     }
 }

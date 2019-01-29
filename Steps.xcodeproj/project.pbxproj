@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA228F3321FEC50100402012 /* SettingsBusinessRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA228F3221FEC50100402012 /* SettingsBusinessRules.swift */; };
 		EAA2193621FAF50800E125A1 /* ColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA2193521FAF50800E125A1 /* ColorsViewController.swift */; };
 		EAAF3C1E21EF081400159A31 /* ObjectOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAF3C1D21EF081400159A31 /* ObjectOnMap.swift */; };
 		EAAF3C2021EF0B6500159A31 /* ObjectsOnMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAF3C1F21EF0B6500159A31 /* ObjectsOnMapView.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA228F3221FEC50100402012 /* SettingsBusinessRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBusinessRules.swift; sourceTree = "<group>"; };
 		EAA2193521FAF50800E125A1 /* ColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsViewController.swift; sourceTree = "<group>"; };
 		EAAF3C1D21EF081400159A31 /* ObjectOnMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectOnMap.swift; sourceTree = "<group>"; };
 		EAAF3C1F21EF0B6500159A31 /* ObjectsOnMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsOnMapView.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			children = (
 				EAA2193521FAF50800E125A1 /* ColorsViewController.swift */,
 				EAF866ED21E203CD00779DC8 /* SettingsTableViewController.swift */,
+				EA228F3221FEC50100402012 /* SettingsBusinessRules.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				EAF866EE21E203CE00779DC8 /* SettingsTableViewController.swift in Sources */,
 				EAAF3C2021EF0B6500159A31 /* ObjectsOnMapView.swift in Sources */,
 				EAF866F421E3543700779DC8 /* ObjectsPopoverViewController.swift in Sources */,
+				EA228F3321FEC50100402012 /* SettingsBusinessRules.swift in Sources */,
 				EAB8D78421DF44BD00550E13 /* PointViewController.swift in Sources */,
 				EAC1B88E21DB62710029A44C /* ObjectViewController.swift in Sources */,
 				EAC1B87721DB44F80029A44C /* AppDelegate.swift in Sources */,

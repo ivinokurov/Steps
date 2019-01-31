@@ -32,7 +32,7 @@ class CommonBusinessRules {
     }
     
     class func drawBorder(borderedView view: UIView) {
-        view.layer.borderWidth = 0.2
+        view.layer.borderWidth = 0.12
         view.layer.cornerRadius = 6
         view.layer.borderColor = UIColor.darkGray.cgColor
     }
@@ -91,18 +91,34 @@ class CommonBusinessRules {
         }
     }
     
-    class func showOneButtonAlert(controllerInPresent controller: UIViewController, alertTitle title: String, alertMessage message: String, alertButtonHandler handler: ((UIAlertAction) -> Void)?) {
+    class func showOneButtonAlert(controllerInPresented controller: UIViewController, alertTitle title: String, alertMessage message: String, alertButtonHandler handler: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: handler))
         controller.present(alert, animated: true, completion: nil)
     }
     
-    class func showTwoButtonsAlert(controllerInPresent controller: UIViewController, alertTitle title: String, alertMessage message: String, okButtonHandler okHandler: ((UIAlertAction) -> Void)?, cancelButtonHandler cancelHandler: ((UIAlertAction) -> Void)?) {
+    class func showTwoButtonsAlert(controllerInPresented controller: UIViewController, alertTitle title: String, alertMessage message: String, okButtonHandler okHandler: ((UIAlertAction) -> Void)?, cancelButtonHandler cancelHandler: ((UIAlertAction) -> Void)?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: okHandler))
         alert.addAction(UIAlertAction(title: "Отменить", style: UIAlertAction.Style.destructive, handler: cancelHandler))
         
         controller.present(alert, animated: true, completion: nil)
+    }
+    
+    class func createBorderedImage() -> UIImage {
+        var image: UIImage?
+        switch SettingsBusinessRules.getMarkerColorIndex() {
+            case 0: image = UIImage(named: "Flag1")
+            case 1: image = UIImage(named: "Flag2")
+            case 2: image = UIImage(named: "Flag3")
+            case 3: image = UIImage(named: "Flag4")
+            case 4: image = UIImage(named: "Flag5")
+            case .none:
+                image = UIImage(named: "Flag")
+            case .some(_):
+                image = UIImage(named: "Flag")
+        }
+        return image!.combineWith(image: UIImage(named: "FlagBase")!)
     }
 }

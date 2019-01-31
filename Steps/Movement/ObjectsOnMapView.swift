@@ -7,6 +7,21 @@
 import Foundation
 import MapKit
 
+extension UIImage {
+    func combineWith(image: UIImage) -> UIImage {
+        let size = CGSize(width: self.size.width, height: self.size.height + image.size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        
+        self.draw(in: CGRect(x:0 , y: 0, width: size.width, height: self.size.height))
+        image.draw(in: CGRect(x:0 , y: 0, width: size.width, height: self.size.height))
+        
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+}
+
 class ObjectsOnMapView: MKAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
@@ -20,14 +35,14 @@ class ObjectsOnMapView: MKAnnotationView {
             mapsButton.setBackgroundImage(UIImage(named: "Maps-icon"), for: UIControl.State())
             rightCalloutAccessoryView = mapsButton
             
-            image = UIImage(named: "LocationMarker")
+            image = CommonBusinessRules.createBorderedImage()
             
             let detailLabel = UILabel()
             detailLabel.numberOfLines = 1
             detailLabel.font = detailLabel.font.withSize(13)
             detailLabel.text = objectOnMap.decription
             detailCalloutAccessoryView = detailLabel
-            detailLabel.textColor = SettingsBusinessRules.annotationColors[SettingsBusinessRules.getAnnotationColorIndex()!]
+            detailLabel.textColor = SettingsBusinessRules.colors[SettingsBusinessRules.getAnnotationColorIndex()!]
         }
     }
 }

@@ -28,11 +28,25 @@ class ColorsViewController: UIViewController {
         CommonBusinessRules.drawControllerBorder(borderedController: self)
         CommonBusinessRules.drawBorder(borderedView: self.setColorButton)
         
-        self.selectAnnotationColorButton()
+        self.selectColorButton()
     }
     
-    func selectAnnotationColorButton() {
-        let selectedColorIndex = self.cellIndexPath!.row == 1 ? SettingsBusinessRules.getMarkerColorIndex() : SettingsBusinessRules.getAnnotationColorIndex()
+    func selectColorButton() {
+        var selectedColorIndex: Int?
+        
+        switch self.cellIndexPath {
+            case SettingsBusinessRules.markerColorCellIndex: do {
+                selectedColorIndex = SettingsBusinessRules.getMarkerColorIndex()
+                }
+            case SettingsBusinessRules.annotationColorCellIndex: do {
+                selectedColorIndex = SettingsBusinessRules.getAnnotationColorIndex()
+                }
+            case SettingsBusinessRules.trackColorCellIndex: do {
+                 selectedColorIndex = SettingsBusinessRules.getTrackColorIndex()
+            }
+            default: do {}
+        }
+
         for colorButton in self.colorButtons {
             if colorButton.tag == selectedColorIndex {
                 colorButton.setImage(UIImage(named: "CheckMark"), for: .normal)
@@ -67,10 +81,17 @@ class ColorsViewController: UIViewController {
                 colorButton.setImage(UIImage(named: "CheckMark"), for: .normal)
                 colorButton.imageView?.tintColor = .white
                 
-                if self.cellIndexPath?.row == 1 {
-                    SettingsBusinessRules.setMarkerColorIndex(markerColorIndex: Int32(colorButton.tag))
-                } else {
-                     SettingsBusinessRules.setAnnotationColorIndex(annotationColorIndex: Int32(colorButton.tag))
+                switch self.cellIndexPath {
+                    case SettingsBusinessRules.markerColorCellIndex: do {
+                        SettingsBusinessRules.setMarkerColorIndex(markerColorIndex: Int32(colorButton.tag))
+                        }
+                    case SettingsBusinessRules.annotationColorCellIndex: do {
+                         SettingsBusinessRules.setAnnotationColorIndex(annotationColorIndex: Int32(colorButton.tag))
+                        }
+                    case SettingsBusinessRules.trackColorCellIndex: do {
+                        SettingsBusinessRules.setTrackColorIndex(trackColorIndex: Int32(colorButton.tag))
+                    }
+                    default: do {}
                 }
                 
                 self.settingsTableViewController?.showCurrentColor(indexPath: self.cellIndexPath!)

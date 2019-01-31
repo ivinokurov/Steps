@@ -13,7 +13,7 @@ class ObjectOnMap: NSObject, MKAnnotation {
     var decription: String
     var coordinate: CLLocationCoordinate2D
     var imageName: String? {    // можно изменить в завистмости от типа точки маршрута
-        return "LocationMarker"
+        return "Flag"
     }
     
     init(title: String, decription: String, coordinate: CLLocationCoordinate2D) {

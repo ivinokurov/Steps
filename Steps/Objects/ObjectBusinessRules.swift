@@ -57,6 +57,25 @@ class ObjectBusinessRules: NSObject {
         }
     }
     
+    class func changeObject(originObjectName originName: String, originObjectDescription originDesc: String?, newObjectName newName: String, newObjectDescription newDesc: String?) {
+        let viewContext = CommonBusinessRules.getManagedView()
+        if viewContext != nil {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Objects")
+            fetchRequest.predicate = NSPredicate(format: "name == %@ AND desc = %@", argumentArray: [originName, originDesc as Any])
+            do {
+                let fetchResult = try viewContext!.fetch(fetchRequest) as! [NSManagedObject]
+                if fetchResult.count > 0 {
+                    let object = fetchResult.first
+                    object!.setValue(newName, forKey: "name")
+                    object!.setValue(newDesc, forKey: "desc")
+                    try viewContext!.save()
+                }
+            } catch let error as NSError {
+                NSLog("Ошибка изменения сущности Objects: " + error.localizedDescription)
+            }
+        }
+    }
+    
     class func isTheSameObjectPresents(objectName name: String, objectDescription desc: String?) -> Bool {
         if let allObjects = self.getAllObjects() {
             if allObjects.count != 0 {

@@ -20,9 +20,15 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
         
         CommonBusinessRules.drawBorder(borderedView: self.beginMovementButton)
         CommonBusinessRules.customizeButton(buttonToCustomize: self.beginMovementButton)
+        CommonBusinessRules.drawBorder(borderedView: self.showMapObjectButton)
+        CommonBusinessRules.customizeButton(buttonToCustomize: self.showMapObjectButton)
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -75,7 +81,7 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     
     func selectObjectHandler() -> Bool {
         if self.objectName == nil {
-            CommonBusinessRules.showOneButtonAlert(controllerInPresent: self, alertTitle: "Выбор объекта", alertMessage: "Объект не выбран!", alertButtonHandler: nil)
+            CommonBusinessRules.showOneButtonAlert(controllerInPresented: self, alertTitle: "Выбор объекта", alertMessage: "Объект не выбран!", alertButtonHandler: nil)
             return false
         }
         return true
@@ -86,8 +92,9 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
             self.movementViewController?.navigationItem.title = self.objectName?.uppercased()
             if ObjectBusinessRules.isObjectHasPoints(name: self.objectName!) {
                 self.movementViewController?.mapView.isHidden = false
+                self.movementViewController?.dropDownView.hideDropDownView()
             } else {
-                CommonBusinessRules.showOneButtonAlert(controllerInPresent: self.movementViewController!, alertTitle: "Выбор объекта", alertMessage: "Для этого объекта маршруты не сформированы!", alertButtonHandler: nil)
+                CommonBusinessRules.showOneButtonAlert(controllerInPresented: self.movementViewController!, alertTitle: "Выбор объекта", alertMessage: "Для этого объекта маршруты не сформированы!", alertButtonHandler: nil)
                 self.movementViewController?.mapView.isHidden = true
             }
         }

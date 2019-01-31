@@ -62,6 +62,8 @@ class PointsTableViewController: UITableViewController {
             cell.imageView?.isHidden = !(isChecked as! Bool)
         }
         
+        cell.imageView?.image = CommonBusinessRules.createBorderedImage()
+
         cell.textLabel!.attributedText = PointBusinessRules.createTitltString(routePoint: point).htmlToAttributedString
         cell.detailTextLabel!.attributedText = PointBusinessRules.createDetailString(routePoint: point).htmlToAttributedString
         
@@ -71,7 +73,7 @@ class PointsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .normal, title:  "Удалить", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+        let deleteAction = UIContextualAction(style: .normal, title:  "Удалить\nточку", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             
             let point = PointBusinessRules.getRouteAllPoints(objectRoute: RouteBusinessRules.selectedRoute!)![indexPath.row]
             PointBusinessRules.deletePoint(routeToDeletePoint: RouteBusinessRules.selectedRoute!, pointToDelete: point)
@@ -80,7 +82,7 @@ class PointsTableViewController: UITableViewController {
 
             success(true)
         })
-        deleteAction.backgroundColor = .red
+        deleteAction.backgroundColor = SettingsBusinessRules.colors[0]
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }

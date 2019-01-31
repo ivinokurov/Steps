@@ -29,6 +29,7 @@ class PointViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var pointInfoLabel: UILabel!
     @IBOutlet weak var newPointButton: UIButton!
     @IBOutlet weak var showMarkerLabel: UILabel!
+    @IBOutlet weak var markerImageView: UIImageView!
     
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
@@ -77,6 +78,11 @@ class PointViewController: UIViewController, CLLocationManagerDelegate {
         super.viewWillAppear(animated)
         
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
+        
+    //    DispatchQueue.main.async {
+            self.pointNameTextField.becomeFirstResponder()
+    //    }
+        self.markerImageView.tintColor = SettingsBusinessRules.colors[SettingsBusinessRules.getMarkerColorIndex()!]
     }
     
     func createInfoString() -> String {
@@ -189,7 +195,7 @@ class PointViewController: UIViewController, CLLocationManagerDelegate {
             if !PointBusinessRules.isTheSamePointNamePresents(objectRoute: RouteBusinessRules.selectedRoute!, pointName: pointName) {
                 addPoint()
             } else {
-                CommonBusinessRules.showTwoButtonsAlert(controllerInPresent: self, alertTitle: "Ошибка ввода", alertMessage: "Точка маршрута с таким именем уже присутствует! Добавить ещё одну точку с такм же именем?", okButtonHandler: okHandler, cancelButtonHandler: nil)
+                CommonBusinessRules.showTwoButtonsAlert(controllerInPresented: self, alertTitle: "Ошибка ввода", alertMessage: "Точка маршрута с таким именем уже присутствует! Добавить ещё одну точку с такм же именем?", okButtonHandler: okHandler, cancelButtonHandler: nil)
             }
         } 
     }

@@ -13,7 +13,8 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     var filteredAllObjects: [NSManagedObject]?
     let searchController = UISearchController(searchResultsController: nil)
     var cancelWasClicked: Bool = false
-    var backFromChild: Bool = false     
+    var backFromChild: Bool = false
+    var swipedCellIndexPath: IndexPath? = nil
     
     @IBOutlet var notFoundView: UIView!
     
@@ -74,6 +75,7 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
         }
         
         self.backFromChild = true
+        self.swipedCellIndexPath = nil
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -109,23 +111,34 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .normal, title:  "Удалить", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+        let deleteAction = UIContextualAction(style: .normal, title:  "Удалить\nобъект", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             
-            let object = self.getDataToLoadTable()?[indexPath.row]
-            
-            let name = object!.value(forKeyPath: "name") as? String
-            let desc = object!.value(forKeyPath: "desc") as? String
-            
-            ObjectBusinessRules.deleteObject(objectName: name!, objectDescription: desc)
-            
-            self.allObjects = ObjectBusinessRules.getAllObjects()            
-            self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+            let okHandler: ((UIAlertAction) -> Void)? = { _ in
+                let object = self.getDataToLoadTable()?[indexPath.row]
+                
+                let name = object!.value(forKeyPath: "name") as? String
+                let desc = object!.value(forKeyPath: "desc") as? String
+                
+                ObjectBusinessRules.deleteObject(objectName: name!, objectDescription: desc)
+                
+                self.allObjects = ObjectBusinessRules.getAllObjects()
+                self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+            }
+        
+            CommonBusinessRules.showTwoButtonsAlert(controllerInPresented: self, alertTitle: "Удаление объекта", alertMessage: "Удалить этот объект?", okButtonHandler: okHandler, cancelButtonHandler: nil)
 
             success(true)
         })
-        deleteAction.backgroundColor = .red
+        deleteAction.backgroundColor = SettingsBusinessRules.colors[0]
         
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        let editAction = UIContextualAction(style: .normal, title:  "Изменить\nобъект", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+            self.swipedCellIndexPath = indexPath
+            self.performSegue(withIdentifier: "addObjectController", sender: nil)
+            success(true)
+        })
+        editAction.backgroundColor = SettingsBusinessRules.colors[4]
+        
+        return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -143,6 +156,23 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
             }
         }
     }
+    
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addObjectController" {
+            if let controller = segue.destination as? ObjectViewController {
+                
+                if self.swipedCellIndexPath == nil {
+                    controller.isEdit = false
+                } else {
+                    let cell = self.tableView.cellForRow(at: self.swipedCellIndexPath!)
+                    controller.isEdit = true
+                    controller.title = "ИЗМЕНЕНИЕ ОБЪЕКТА"
+                    controller.objectToEditName = cell?.textLabel?.text
+                    controller.objectToEditDescription = cell?.detailTextLabel?.text
+                }
+            }
+        }
+     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: nil) { _ in

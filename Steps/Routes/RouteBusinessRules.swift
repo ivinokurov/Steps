@@ -62,7 +62,7 @@ class RouteBusinessRules: NSObject {
         if routePointsCount != 0 {
             infoString += "<font color='grey'> (" + String(format: "точек маршрута: %d", routePointsCount) + ")</font>"
         } else {
-            infoString += "<font color='red'> (маршрут не сформирован)</font>"
+            infoString += "<font color='#EB787C'> (маршрут не сформирован)</font>"
         }
         
         infoString += "</font>"

@@ -28,11 +28,12 @@
         <attribute name="differentMarkerIcons" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="markerColorIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="showCompass" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="trackColorIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
         <element name="Objects" positionX="-312.23828125" positionY="-194.0859375" width="128" height="88"/>
         <element name="Points" positionX="124.59765625" positionY="-35.47265625" width="128" height="193"/>
         <element name="Routes" positionX="-98.38671875" positionY="-87.56640625" width="128" height="103"/>
-        <element name="Settings" positionX="123.54296875" positionY="-191.3515625" width="128" height="103"/>
+        <element name="Settings" positionX="123.54296875" positionY="-191.3515625" width="128" height="118"/>
     </elements>
 </model>

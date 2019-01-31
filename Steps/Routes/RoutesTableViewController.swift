@@ -112,39 +112,33 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
         return cell
     }
     
-    func createInfoString(nameStr: String, pointsNumber: Int) -> String {
-        var routePointsCountStr: String
-        
-        var infoString = "<font face='Helvetica Neue' size=5><b>" + nameStr + "</b>"
-        
-        if pointsNumber != 0 {
-            routePointsCountStr = "<font color='grey'> (" + String(format: "точек маршрута: %d", pointsNumber) + ")</font>"
-        } else {
-            routePointsCountStr = "<font color='red'> (маршрут не сформирован)</font>"
-        }
-        
-        infoString += routePointsCountStr + "</font>"
-        
-        return infoString
-    }
-    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .normal, title:  "Удалить", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-
+        let deleteAction = UIContextualAction(style: .normal, title:  "Удалить\nмаршрут", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+            
+            let okHandler: ((UIAlertAction) -> Void)? = { _ in
                 let name = self.getDataToLoadTable()?[indexPath.row].value(forKeyPath: "name") as? String
                 let desc = self.getDataToLoadTable()?[indexPath.row].value(forKeyPath: "desc") as? String
-            
+                
                 RouteBusinessRules.deleteRoute(routeObject: ObjectBusinessRules.selectedObject!, routeName: name!, routeDescription: desc)
-            
+                
                 self.allRoutes = RouteBusinessRules.getObjectAllRoutes(routeObject: ObjectBusinessRules.selectedObject!)
-        
+                
                 self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+            }
             
-                success(true)
+            CommonBusinessRules.showTwoButtonsAlert(controllerInPresented: self, alertTitle: "Удаление маршрута", alertMessage: "Удалить этот маршрут?", okButtonHandler: okHandler, cancelButtonHandler: nil)
+            
+            success(true)
         })
-        deleteAction.backgroundColor = .red
+        deleteAction.backgroundColor = SettingsBusinessRules.colors[0]
         
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        let editAction = UIContextualAction(style: .normal, title:  "Изменить\nмаршрут", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+            
+            success(true)
+        })
+        editAction.backgroundColor = SettingsBusinessRules.colors[4]
+        
+        return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

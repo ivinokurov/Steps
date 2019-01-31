@@ -32,6 +32,10 @@ class RouteViewController: UIViewController {
         super.viewWillAppear(animated)
         
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
+        
+    //    DispatchQueue.main.async {
+            self.routeNameTextField.becomeFirstResponder()
+    //    }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -45,13 +49,13 @@ class RouteViewController: UIViewController {
         
         if let name = self.routeNameTextField.text {
             if name.isEmpty {
-                CommonBusinessRules.showOneButtonAlert(controllerInPresent: self, alertTitle: "Ошибка ввода", alertMessage: "Отсутствует название маршрута!", alertButtonHandler: handler)
+                CommonBusinessRules.showOneButtonAlert(controllerInPresented: self, alertTitle: "Ошибка ввода", alertMessage: "Отсутствует название маршрута!", alertButtonHandler: handler)
             } else {
                 if !RouteBusinessRules.isTheSameRoutePresents(routeObject: ObjectBusinessRules.selectedObject!, routeName: name, routeDescription: desc) {
                     RouteBusinessRules.addNewRoute(objectToAddRoute: ObjectBusinessRules.selectedObject!, routeName: name, routeDescription: desc)
                     self.navigationController?.popViewController(animated: true)
                 } else {
-                    CommonBusinessRules.showOneButtonAlert(controllerInPresent: self, alertTitle: "Ошибка ввода", alertMessage: "Маршрут с таким описанием уже присутствует!", alertButtonHandler: handler)
+                    CommonBusinessRules.showOneButtonAlert(controllerInPresented: self, alertTitle: "Ошибка ввода", alertMessage: "Маршрут с таким описанием уже присутствует!", alertButtonHandler: handler)
                 }
             }
         }

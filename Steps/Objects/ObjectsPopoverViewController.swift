@@ -13,7 +13,6 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var showMapObjectButton: UIButton!
     
     var movementViewController: MovementViewController?
-    var objectName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,13 +45,17 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "objectCellId", for: indexPath)
 
-        cell.textLabel!.text = ObjectBusinessRules.getAllObjects()![indexPath.row].value(forKeyPath: "name") as? String
+        let object = ObjectBusinessRules.getAllObjects()![indexPath.row]
+        let objectName = object.value(forKeyPath: "name") as? String
+        let objectDescription = object.value(forKeyPath: "desc") as? String
+        
+        cell.textLabel!.text = objectName
+        cell.detailTextLabel!.text = objectDescription
         
         if let viewController = self.movementViewController {
-            if cell.textLabel!.text?.uppercased() == viewController.navigationItem.title {
+            if MovementBusinessRules.objectOnMapTitle == objectName && MovementBusinessRules.objectOnMapDescription == objectDescription {
                 self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                 cell.accessoryType = .checkmark
-                self.objectName = cell.textLabel?.text
             } else {
                 cell.accessoryType = .none
             }
@@ -64,7 +67,8 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = self.tableView.cellForRow(at: indexPath)
-        self.objectName = cell?.textLabel?.text
+        MovementBusinessRules.objectOnMapTitle = cell?.textLabel?.text
+        MovementBusinessRules.objectOnMapDescription = cell?.detailTextLabel?.text
         cell!.accessoryType = .checkmark
     }
     
@@ -74,13 +78,13 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBAction func beginMovement(_ sender: UIButton) {
         if self.selectObjectHandler() {
-            self.movementViewController?.navigationItem.title = self.objectName?.uppercased()
+            self.movementViewController?.navigationItem.title = MovementBusinessRules.objectOnMapTitle!.uppercased()
             self.dismiss(animated: true, completion: nil)
         }
     }
     
     func selectObjectHandler() -> Bool {
-        if self.objectName == nil {
+        if MovementBusinessRules.objectOnMapTitle == nil {
             CommonBusinessRules.showOneButtonAlert(controllerInPresented: self, alertTitle: "Выбор объекта", alertMessage: "Объект не выбран!", alertButtonHandler: nil)
             return false
         }
@@ -89,8 +93,9 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBAction func showMapObject(_ sender: UIButton) {
         if self.selectObjectHandler() {
-            self.movementViewController?.navigationItem.title = self.objectName?.uppercased()
-            if ObjectBusinessRules.isObjectHasPoints(name: self.objectName!) {
+        //    self.movementViewController?.navigationItem.setTitle((MovementBusinessRules.objectOnMapTitle?.uppercased())!, subtitle: MovementBusinessRules.objectOnMapDescription!.uppercased() ?? "")
+            self.movementViewController?.navigationItem.title = MovementBusinessRules.objectOnMapTitle?.uppercased()
+            if ObjectBusinessRules.isObjectHasPoints(name: MovementBusinessRules.objectOnMapTitle!) {
                 self.movementViewController?.mapView.isHidden = false
                 self.movementViewController?.dropDownView.hideDropDownView()
             } else {

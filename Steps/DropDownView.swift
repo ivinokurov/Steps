@@ -25,8 +25,8 @@ class DropDownView {
 
         if self.dropDownView != nil {
             let dropDownViewWidth = self.dropDownView!.frame.size.width
-            let width: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 2 - (self.movementViewController?.navigationController?.navigationBar.frame.height)!: dropDownViewWidth
-            let x: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 2 : 0
+            let width: CGFloat = UIDevice.current.orientation.isLandscape ? 2 * dropDownViewWidth / 3 - (self.movementViewController?.navigationController?.navigationBar.frame.height)!: dropDownViewWidth
+            let x: CGFloat = UIDevice.current.orientation.isLandscape ? 1 * dropDownViewWidth / 3 : 0
             let height: CGFloat = UIDevice.current.orientation.isLandscape ? 216 : 260
             self.dropDownView!.frame = CGRect(x: x, y: -height, width: width, height: height)
             self.dropDownViewIsDisplayed = false

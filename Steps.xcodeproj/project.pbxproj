@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EA228F3321FEC50100402012 /* SettingsBusinessRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA228F3221FEC50100402012 /* SettingsBusinessRules.swift */; };
+		EA228F35220325C100402012 /* MovementBusinessRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA228F34220325C000402012 /* MovementBusinessRules.swift */; };
 		EAA2193621FAF50800E125A1 /* ColorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA2193521FAF50800E125A1 /* ColorsViewController.swift */; };
 		EAAF3C1E21EF081400159A31 /* ObjectOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAF3C1D21EF081400159A31 /* ObjectOnMap.swift */; };
 		EAAF3C2021EF0B6500159A31 /* ObjectsOnMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAF3C1F21EF0B6500159A31 /* ObjectsOnMapView.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		EA228F3221FEC50100402012 /* SettingsBusinessRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsBusinessRules.swift; sourceTree = "<group>"; };
+		EA228F34220325C000402012 /* MovementBusinessRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementBusinessRules.swift; sourceTree = "<group>"; };
 		EAA2193521FAF50800E125A1 /* ColorsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsViewController.swift; sourceTree = "<group>"; };
 		EAAF3C1D21EF081400159A31 /* ObjectOnMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectOnMap.swift; sourceTree = "<group>"; };
 		EAAF3C1F21EF0B6500159A31 /* ObjectsOnMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsOnMapView.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				EAAF3C1D21EF081400159A31 /* ObjectOnMap.swift */,
 				EAAF3C1F21EF0B6500159A31 /* ObjectsOnMapView.swift */,
 				EAF866F121E2229200779DC8 /* MovementViewController.swift */,
+				EA228F34220325C000402012 /* MovementBusinessRules.swift */,
 			);
 			path = Movement;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				EAF866F221E2229200779DC8 /* MovementViewController.swift in Sources */,
 				EAB8D77F21DDCAD800550E13 /* RouteBusinessRules.swift in Sources */,
 				EAB8D77B21DCDF9900550E13 /* RouteViewController.swift in Sources */,
+				EA228F35220325C100402012 /* MovementBusinessRules.swift in Sources */,
 				EAF866EC21E0962F00779DC8 /* PointBusinessRules.swift in Sources */,
 				EAB8D77D21DCE18300550E13 /* ObjectBusinessRules.swift in Sources */,
 				EAA2193621FAF50800E125A1 /* ColorsViewController.swift in Sources */,

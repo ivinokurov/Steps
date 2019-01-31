@@ -41,13 +41,7 @@ class PointBusinessRules: NSObject {
             let name = point.value(forKey: "name") as? String
             let latitude = point.value(forKey: "latitude") as? Double
             let longitude = point.value(forKey: "longitude") as? Double
-        //    let magneticFieldX = point.value(forKey: "magneticFieldX") as? Double
-        //    let magneticFieldY = point.value(forKey: "magneticFieldY") as? Double
-        //    let magneticFieldZ = point.value(forKey: "magneticFieldZ") as? Double
-        //    let pressure = point.value(forKey: "pressure") as? Double
-        //    let numberOfSteps = point.value(forKey: "numberOfSteps") as? Int32
-            
-        //    fetchRequest.predicate = NSPredicate(format: "name == %f AND latitude = %f AND longitude = %f AND magneticFieldX = %f AND magneticFieldY = %f AND magneticFieldZ = %f AND pressure = %f AND numberOfSteps = %d", argumentArray: [name, latitude, longitude, magneticFieldX, magneticFieldY, magneticFieldZ, pressure, numberOfSteps])
+
             fetchRequest.predicate = NSPredicate(format: "name == %@ AND latitude == %f AND longitude == %f", argumentArray: [name as Any, latitude as Any, longitude as Any])
             do {
                 let fetchResult = try viewContext!.fetch(fetchRequest) as! [NSManagedObject]

@@ -122,30 +122,13 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
     }
     
     @objc func selectBuildingToRouteIn(_ sender: UIBarButtonItem) -> Void {
-    //    performSegue(withIdentifier: "showBuildingList", sender: nil)
         if self.dropDownView.dropDownViewIsDisplayed {
             self.dropDownView.hideDropDownView()
         } else {
             self.dropDownView.showDropDownView()
         }
     }
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showBuildingList" {
-            if let controller = segue.destination as? ObjectsPopoverViewController {
-                controller.popoverPresentationController!.delegate = self
-                controller.modalPresentationStyle = .popover
-                controller.preferredContentSize = CGSize(width: 300, height: 260)
-                controller.popoverPresentationController?.backgroundColor = .white
-                controller.movementViewController = self
-                
-                if let presentation = controller.popoverPresentationController {
-                    presentation.barButtonItem = navigationItem.rightBarButtonItem
-                }
-            }
-        }
-    }
-    */
+
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle{
         return .none
     }

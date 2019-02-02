@@ -82,6 +82,7 @@ class PointViewController: UIViewController, CLLocationManagerDelegate {
     //    DispatchQueue.main.async {
             self.pointNameTextField.becomeFirstResponder()
     //    }
+        self.markerImageView.image = CommonBusinessRules.createBorderedImage()
         self.markerImageView.tintColor = SettingsBusinessRules.colors[SettingsBusinessRules.getMarkerColorIndex()!]
     }
     

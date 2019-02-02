@@ -17,10 +17,10 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CommonBusinessRules.drawBorder(borderedView: self.beginMovementButton)
-        CommonBusinessRules.customizeButton(buttonToCustomize: self.beginMovementButton)
-        CommonBusinessRules.drawBorder(borderedView: self.showMapObjectButton)
-        CommonBusinessRules.customizeButton(buttonToCustomize: self.showMapObjectButton)
+    //    CommonBusinessRules.drawBorder(borderedView: self.beginMovementButton)
+    //    CommonBusinessRules.customizeButton(buttonToCustomize: self.beginMovementButton)
+    //    CommonBusinessRules.drawBorder(borderedView: self.showMapObjectButton)
+    //    CommonBusinessRules.customizeButton(buttonToCustomize: self.showMapObjectButton)
         
         self.tableView.dataSource = self
         self.tableView.delegate = self

@@ -8,8 +8,8 @@ import UIKit
 
 class PointsTableViewController: UITableViewController {
     
-    
     @IBOutlet var notFoundView: UIView!
+    var selectPointTypeSegmentedControl = UISegmentedControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +20,25 @@ class PointsTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = addNewRouteButton
         self.tableView.backgroundColor = .white
         self.tableView.tableFooterView = UIView()
+        
+        self.initSegmentedControl()
+        self.navigationItem.titleView = self.selectPointTypeSegmentedControl
+    }
+    
+    func initSegmentedControl() {
+        self.selectPointTypeSegmentedControl.tintColor = .white
+        self.selectPointTypeSegmentedControl.insertSegment(withTitle: "ВСЕ ТОЧКИ", at: 0, animated: true)
+        self.selectPointTypeSegmentedControl.insertSegment(withTitle: "С МАРКЕРОМ", at: 1, animated: true)
+        self.selectPointTypeSegmentedControl.addTarget(self, action: #selector(PointsTableViewController.selectPointsByType(_:)), for: .valueChanged)
+        self.selectPointTypeSegmentedControl.selectedSegmentIndex = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
+
+        self.reloadDataWithSelectedItem(with: selectPointTypeSegmentedControl.selectedSegmentIndex)
         
         self.tableView.reloadData()
     }
@@ -39,7 +52,7 @@ class PointsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let data = RouteBusinessRules.selectedRoute?.mutableSetValue(forKey: "routePoints") {
+        if let data = PointBusinessRules.allRoutePoints {
             if data.count == 0 {
                 self.tableView.backgroundView = self.notFoundView
                 return 0
@@ -56,7 +69,7 @@ class PointsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "pointCellId", for: indexPath)
 
-        let point = PointBusinessRules.getRouteAllPoints(objectRoute: RouteBusinessRules.selectedRoute!)![indexPath.row]
+        let point = PointBusinessRules.allRoutePoints![indexPath.row]
         
         if let isChecked = point.value(forKeyPath: "isMarkerPresents") {
             cell.imageView?.isHidden = !(isChecked as! Bool)
@@ -75,7 +88,7 @@ class PointsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal, title:  "Удалить\nточку", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
             
-            let point = PointBusinessRules.getRouteAllPoints(objectRoute: RouteBusinessRules.selectedRoute!)![indexPath.row]
+            let point = PointBusinessRules.allRoutePoints![indexPath.row]
             PointBusinessRules.deletePoint(routeToDeletePoint: RouteBusinessRules.selectedRoute!, pointToDelete: point)
             
             self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
@@ -91,5 +104,23 @@ class PointsTableViewController: UITableViewController {
             coordinator.animate(alongsideTransition: nil) { _ in
                 self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             }
+    }
+    
+    @IBAction func selectPointsByType(_ sender: UISegmentedControl) {
+        self.reloadDataWithSelectedItem(with: sender.selectedSegmentIndex)
+    }
+    
+    func reloadDataWithSelectedItem(with itemIndex: Int) {
+        if itemIndex == 0 {
+            PointBusinessRules.allRoutePoints = PointBusinessRules.getRouteAllPoints(objectRoute: RouteBusinessRules.selectedRoute!)
+        } else {
+            PointBusinessRules.allRoutePoints = PointBusinessRules.getRouteAllPointsWithMarker(objectRoute: RouteBusinessRules.selectedRoute!)
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 }

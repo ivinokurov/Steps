@@ -18,6 +18,7 @@ class ColorsViewController: UIViewController {
     @IBOutlet var colorButtons: [UIButton]!
     @IBOutlet weak var setColorButton: UIButton!
     @IBOutlet var dismissControllerSwipeGestureRecognizer: UISwipeGestureRecognizer!
+    @IBOutlet weak var arrowDownImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,8 @@ class ColorsViewController: UIViewController {
         
         CommonBusinessRules.drawControllerBorder(borderedController: self)
         CommonBusinessRules.drawBorder(borderedView: self.setColorButton)
+        
+        self.arrowDownImageView.tintColor = CommonBusinessRules.bkgColor
         
         self.selectColorButton()
     }
@@ -65,6 +68,7 @@ class ColorsViewController: UIViewController {
     }
     
     @IBAction func dismissViewController(_ sender: UIButton) {
+        self.arrowDownImageView.isHidden = true
         self.dismissController()
     }
     
@@ -104,6 +108,7 @@ class ColorsViewController: UIViewController {
     
     @IBAction func dismissControllerBySwipeGesture(_ sender: UISwipeGestureRecognizer) {
         if sender.direction == .down {
+            self.arrowDownImageView.isHidden = true
             self.dismissController()
         }
     }

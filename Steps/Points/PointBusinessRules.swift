@@ -9,6 +9,8 @@ import CoreData
 
 class PointBusinessRules: NSObject {
     
+    static var allRoutePoints: [NSManagedObject]?
+    
     class func addNewPoint(routeToAddPoint object: NSManagedObject, pointViewController controller: PointViewController) {
         let viewContext = CommonBusinessRules.getManagedView()
         if viewContext != nil {
@@ -59,6 +61,13 @@ class PointBusinessRules: NSObject {
     class func getRouteAllPoints(objectRoute route: NSManagedObject) -> [NSManagedObject]? {
         let objectRoutes = route.mutableSetValue(forKey: "routePoints").allObjects as? [NSManagedObject]
         return objectRoutes?.sorted(by: {($0.value(forKeyPath: "name") as! String) < ($1.value(forKeyPath: "name") as! String)})
+    }
+    
+    class func getRouteAllPointsWithMarker(objectRoute route: NSManagedObject) -> [NSManagedObject]? {
+        let objectRoutes = route.mutableSetValue(forKey: "routePoints").allObjects as? [NSManagedObject]
+        return objectRoutes!.filter({(object: NSManagedObject) -> Bool in
+            ((object.value(forKey: "isMarkerPresents") as! Bool))
+        })
     }
     
     class func isTheSamePointNamePresents(objectRoute object: NSManagedObject, pointName name: String) -> Bool {

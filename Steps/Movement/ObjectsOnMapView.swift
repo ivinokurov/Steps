@@ -9,16 +9,25 @@ import MapKit
 
 extension UIImage {
     func combineWith(image: UIImage) -> UIImage {
-        let size = CGSize(width: self.size.width, height: self.size.height + image.size.height)
+        let size = CGSize(width: self.size.width, height: self.size.height)
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+
+        self.draw(in: CGRect(x: 0 , y: 0, width: size.width, height: self.size.height))
         
-        self.draw(in: CGRect(x:0 , y: 0, width: size.width, height: self.size.height))
-        image.draw(in: CGRect(x:0 , y: 0, width: size.width, height: self.size.height))
-        
+        image.draw(in: CGRect(x: 0 , y: 0, width: size.width, height: self.size.height))
         let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return newImage
+    }
+}
+
+extension UIImageView {
+    
+    func maskWith(color: UIColor) {
+        guard let tempImage = image?.withRenderingMode(.alwaysTemplate) else { return }
+        image = tempImage
+        tintColor = UIColor.red
     }
 }
 

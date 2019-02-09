@@ -23,6 +23,8 @@ class PointsTableViewController: UITableViewController {
         
         self.initSegmentedControl()
         self.navigationItem.titleView = self.selectPointTypeSegmentedControl
+        
+        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
     }
     
     func initSegmentedControl() {

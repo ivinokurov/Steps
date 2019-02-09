@@ -8,7 +8,7 @@ import UIKit
 
 class ColorsViewController: UIViewController {
     
-    let height: CGFloat = 180.0
+    let height: CGFloat = 120.0
     
     var settingsTableViewController: SettingsTableViewController?
     var cellIndexPath: IndexPath?
@@ -22,8 +22,9 @@ class ColorsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.alpha = 0.9
         self.view.addGestureRecognizer(dismissControllerSwipeGestureRecognizer)
+        
         self.closeButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         
         CommonBusinessRules.drawControllerBorder(borderedController: self)
@@ -99,6 +100,7 @@ class ColorsViewController: UIViewController {
                 }
                 
                 self.settingsTableViewController?.showCurrentColor(indexPath: self.cellIndexPath!)
+                self.arrowDownImageView.isHidden = true
                 self.dismissController()
             } else {
                 colorButton.setImage(UIImage(), for: .normal)

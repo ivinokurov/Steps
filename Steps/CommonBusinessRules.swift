@@ -7,10 +7,32 @@
 import UIKit
 import CoreData
 
+extension UIView {
+    
+    public func addSubviewScreenCenter() {
+        if let keyWindow = UIApplication.shared.keyWindow {
+            keyWindow.addSubview(self)
+            self.center = keyWindow.center
+            
+            self.backgroundColor = .clear
+            self.frame.size.height = 200
+            self.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+            self.translatesAutoresizingMaskIntoConstraints = true
+        }
+    }
+    
+    public func removeFromWindowView() {
+        if self.superview != nil {
+            self.removeFromSuperview()
+        }
+    }
+}
+
 class CommonBusinessRules {
     
     static let bkgColor = UIColor.orange
     static var tabbedRootController: HighlightingTabBarController?
+    static var searchBarHeight: CGFloat = 0.0
     
     class func getManagedView() -> NSManagedObjectContext? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -54,6 +76,8 @@ class CommonBusinessRules {
         viewController.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         viewController.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         viewController.navigationController?.navigationBar.isTranslucent = true
+   //     viewController.extendedLayoutIncludesOpaqueBars = true
+   //     viewController.edgesForExtendedLayout = .all
         
         let backButton = UIBarButtonItem()
         backButton.title = "Назад"
@@ -120,5 +144,39 @@ class CommonBusinessRules {
                 image = UIImage(named: "Flag")
         }
         return image!.combineWith(image: UIImage(named: "FlagBase")!)
+    }
+    
+    class func addNotFoundView(notFoundView: UIView, controller: UIViewController) {
+        if UIDevice.current.orientation.isLandscape {
+            notFoundView.frame.size.width = controller.view.frame.height
+        } else {
+            notFoundView.frame.size.width = controller.view.frame.width
+        }
+        
+        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
+            notFoundView.center = window.center
+            notFoundView.backgroundColor = .clear
+            notFoundView.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+            notFoundView.translatesAutoresizingMaskIntoConstraints = true
+            window.addSubview(notFoundView)
+            notFoundView.alpha = 0.0
+            UIView.animate(withDuration: 0.6, animations: {
+                notFoundView.alpha = 1.0
+            })
+        }
+    }
+    
+    class func hideNotFoundView(notFoundView: UIView) {
+        UIView.animate(withDuration: 0.6, animations: {
+            notFoundView.isHidden = true
+            notFoundView.alpha = 0.0
+        })
+    }
+    
+    class func showNotFoundView(notFoundView: UIView) {
+        UIView.animate(withDuration: 0.6, animations: {
+            notFoundView.isHidden = false
+            notFoundView.alpha = 1.0
+        })
     }
 }

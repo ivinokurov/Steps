@@ -19,14 +19,15 @@ class DropDownView {
         
         self.dropDownViewController = dropDownViewController
         self.dropDownView = dropDownViewController?.view
+        self.dropDownView?.alpha = 0.9
         self.controller = controller
         
         CommonBusinessRules.drawControllerBorder(borderedController: dropDownViewController!)
 
         if self.dropDownView != nil {
             let dropDownViewWidth = self.dropDownView!.frame.size.width
-            let width: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 2 - (self.movementViewController?.navigationController?.navigationBar.frame.height)!: dropDownViewWidth
-            let x: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 2 : 0
+            let width: CGFloat = UIDevice.current.orientation.isLandscape ? 2 * dropDownViewWidth / 3 - (self.movementViewController?.navigationController?.navigationBar.frame.height)!: dropDownViewWidth
+            let x: CGFloat = UIDevice.current.orientation.isLandscape ? dropDownViewWidth / 3 : 0
             let height: CGFloat = UIDevice.current.orientation.isLandscape ? 222 : 260
             self.dropDownView!.frame = CGRect(x: x, y: -height, width: width, height: height)
             self.dropDownViewIsDisplayed = false
@@ -42,6 +43,14 @@ class DropDownView {
     }
 
     func hideDropDownView() {
+        if let title = MovementBusinessRules.objectOnMapTitle {
+            if ObjectBusinessRules.isObjectHasPoints(name: title) == false {
+                CommonBusinessRules.showNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)
+            }
+        } else {
+             self.movementViewController?.notFoundView.isHidden = false
+            CommonBusinessRules.showNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)
+        }
         var frame: CGRect = self.dropDownView!.frame
         frame.origin.y = -frame.size.height
         self.animateDropDownToFrame(frame: frame) {
@@ -51,6 +60,7 @@ class DropDownView {
     }
     
     func showDropDownView() {
+        CommonBusinessRules.hideNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)
         var frame: CGRect = self.dropDownView!.frame
         frame.origin.y = (self.controller?.navigationController?.navigationBar.frame.size.height)!
         self.animateDropDownToFrame(frame: frame) {

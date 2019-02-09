@@ -96,10 +96,12 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
         //    self.movementViewController?.navigationItem.setTitle((MovementBusinessRules.objectOnMapTitle?.uppercased())!, subtitle: MovementBusinessRules.objectOnMapDescription!.uppercased() ?? "")
             self.movementViewController?.navigationItem.title = MovementBusinessRules.objectOnMapTitle?.uppercased()
             if ObjectBusinessRules.isObjectHasPoints(name: MovementBusinessRules.objectOnMapTitle!) {
+                CommonBusinessRules.hideNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)
                 self.movementViewController?.mapView.isHidden = false
                 self.movementViewController?.dropDownView.hideDropDownView()
             } else {
                 CommonBusinessRules.showOneButtonAlert(controllerInPresented: self.movementViewController!, alertTitle: "Выбор объекта", alertMessage: "Для этого объекта маршруты не сформированы!", alertButtonHandler: nil)
+                CommonBusinessRules.hideNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)
                 self.movementViewController?.mapView.isHidden = true
             }
         }

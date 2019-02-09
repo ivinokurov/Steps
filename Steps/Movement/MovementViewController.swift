@@ -23,7 +23,9 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
     var objectsOnMap: [ObjectOnMap] = []
     let regionRadius: CLLocationDistance = 3000
     var dropDownView = DropDownView()
+    var isNotFoundViewPresents: Bool = false
     
+    @IBOutlet var notFoundView: UIView!
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
@@ -36,7 +38,7 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
         
         let selectBuildingButton = UIBarButtonItem(image: UIImage(named: "ArrowDown"), style: .plain, target: self, action: #selector(selectBuildingToRouteIn(_:)))
         self.navigationItem.rightBarButtonItem = selectBuildingButton
-        
+       
         self.mapView.isHidden = true
         self.dropDownView.movementViewController = self
         self.addDropDownView()
@@ -105,7 +107,8 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 0)
         CommonBusinessRules.tabbedRootController!.selectedIndex = 0
         
@@ -156,5 +159,7 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
         
         self.dropDownView.dropDownViewIsDisplayed = false
         self.dropDownView.hideDropDownView()
+        
+        self.notFoundView.removeFromSuperview()
     }
 }

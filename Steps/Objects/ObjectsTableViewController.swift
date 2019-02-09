@@ -66,6 +66,7 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
         
         self.allObjects = ObjectBusinessRules.getAllObjects()
@@ -85,14 +86,14 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = self.getDataToLoadTable() {
             if data.count == 0 {
-                self.tableView.backgroundView = self.notFoundView
+                CommonBusinessRules.showNotFoundView(notFoundView: (self.notFoundView)!)
                 return 0
             } else {
-                self.tableView.backgroundView = nil
+                CommonBusinessRules.hideNotFoundView(notFoundView: (self.notFoundView)!)
                 return data.count
             }
         } else {
-            self.tableView.backgroundView = self.notFoundView
+            CommonBusinessRules.showNotFoundView(notFoundView: (self.notFoundView)!)
             return 0
         }
     }
@@ -176,7 +177,12 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: nil) { _ in
-        //    self.navigationController?.navigationBar.prefersLargeTitles = true
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.notFoundView.removeFromSuperview()
     }
 }

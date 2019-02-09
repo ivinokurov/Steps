@@ -67,7 +67,7 @@ class PointBusinessRules: NSObject {
         let objectRoutes = route.mutableSetValue(forKey: "routePoints").allObjects as? [NSManagedObject]
         return objectRoutes!.filter({(object: NSManagedObject) -> Bool in
             ((object.value(forKey: "isMarkerPresents") as! Bool))
-        })
+            }).sorted(by: {($0.value(forKeyPath: "name") as! String) < ($1.value(forKeyPath: "name") as! String)})
     }
     
     class func isTheSamePointNamePresents(objectRoute object: NSManagedObject, pointName name: String) -> Bool {

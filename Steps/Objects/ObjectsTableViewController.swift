@@ -66,14 +66,14 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
+        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         
         self.allObjects = ObjectBusinessRules.getAllObjects()
         
-        if !self.isFiltering() {
-            self.tableView.reloadData()
-        }
+    //    if !self.isFiltering() {
+        self.tableView.reloadData()
+    //    }
         
         self.backFromChild = true
         self.swipedCellIndexPath = nil
@@ -123,7 +123,10 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
                 ObjectBusinessRules.deleteObject(objectName: name!, objectDescription: desc)
                 
                 self.allObjects = ObjectBusinessRules.getAllObjects()
+                
+                self.tableView.beginUpdates()
                 self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                self.tableView.endUpdates()
             }
         
             CommonBusinessRules.showTwoButtonsAlert(controllerInPresented: self, alertTitle: "Удаление объекта", alertMessage: "Удалить этот объект?", okButtonHandler: okHandler, cancelButtonHandler: nil)
@@ -184,5 +187,6 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
         super.viewWillDisappear(animated)
         
         self.notFoundView.removeFromSuperview()
+        self.notFoundView.isHidden = true
     }
 }

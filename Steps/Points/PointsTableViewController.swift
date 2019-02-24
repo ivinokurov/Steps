@@ -23,8 +23,6 @@ class PointsTableViewController: UITableViewController {
         
         self.initSegmentedControl()
         self.navigationItem.titleView = self.selectPointTypeSegmentedControl
-        
-        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
     }
     
     func initSegmentedControl() {
@@ -39,6 +37,7 @@ class PointsTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
+        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
 
         self.reloadDataWithSelectedItem(with: selectPointTypeSegmentedControl.selectedSegmentIndex)
         
@@ -56,14 +55,14 @@ class PointsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = PointBusinessRules.allRoutePoints {
             if data.count == 0 {
-                self.tableView.backgroundView = self.notFoundView
+                CommonBusinessRules.showNotFoundView(notFoundView: self.notFoundView!)
                 return 0
             } else {
-                self.tableView.backgroundView = nil
+                CommonBusinessRules.hideNotFoundView(notFoundView: self.notFoundView!)
                 return data.count
             }
         } else {
-            self.tableView.backgroundView = self.notFoundView
+            CommonBusinessRules.showNotFoundView(notFoundView: self.notFoundView!)
             return 0
         }
     }
@@ -93,7 +92,11 @@ class PointsTableViewController: UITableViewController {
             let point = PointBusinessRules.allRoutePoints![indexPath.row]
             PointBusinessRules.deletePoint(routeToDeletePoint: RouteBusinessRules.selectedRoute!, pointToDelete: point)
             
+            PointBusinessRules.allRoutePoints = PointBusinessRules.getRouteAllPoints(objectRoute: RouteBusinessRules.selectedRoute!)
+            
+            self.tableView.beginUpdates()
             self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+            self.tableView.endUpdates()
 
             success(true)
         })
@@ -119,10 +122,17 @@ class PointsTableViewController: UITableViewController {
             PointBusinessRules.allRoutePoints = PointBusinessRules.getRouteAllPointsWithMarker(objectRoute: RouteBusinessRules.selectedRoute!)
         }
         
-        DispatchQueue.global(qos: .background).async {
+     //   DispatchQueue.global(qos: .background).async {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-        }
+     //   }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.notFoundView.removeFromSuperview()
+        self.notFoundView.isHidden = true
     }
 }

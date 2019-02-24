@@ -17,11 +17,6 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    //    CommonBusinessRules.drawBorder(borderedView: self.beginMovementButton)
-    //    CommonBusinessRules.customizeButton(buttonToCustomize: self.beginMovementButton)
-    //    CommonBusinessRules.drawBorder(borderedView: self.showMapObjectButton)
-    //    CommonBusinessRules.customizeButton(buttonToCustomize: self.showMapObjectButton)
-        
         self.tableView.dataSource = self
         self.tableView.delegate = self
     }
@@ -93,7 +88,6 @@ class ObjectsPopoverViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBAction func showMapObject(_ sender: UIButton) {
         if self.selectObjectHandler() {
-        //    self.movementViewController?.navigationItem.setTitle((MovementBusinessRules.objectOnMapTitle?.uppercased())!, subtitle: MovementBusinessRules.objectOnMapDescription!.uppercased() ?? "")
             self.movementViewController?.navigationItem.title = MovementBusinessRules.objectOnMapTitle?.uppercased()
             if ObjectBusinessRules.isObjectHasPoints(name: MovementBusinessRules.objectOnMapTitle!) {
                 CommonBusinessRules.hideNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)

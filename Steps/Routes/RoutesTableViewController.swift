@@ -13,7 +13,8 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
     var filteredAllRoutes: [NSManagedObject]?
     let searchController = UISearchController(searchResultsController: nil)
     var cancelWasClicked: Bool = false
-    var backFromChild: Bool = false 
+    var backFromChild: Bool = false
+    var swipedCellIndexPath: IndexPath? = nil
     
     @IBOutlet var notFoundView: UIView!
     
@@ -33,8 +34,8 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 1)
+        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         
         if let objects = ObjectBusinessRules.selectedObject {
             self.allRoutes = RouteBusinessRules.getObjectAllRoutes(routeObject: objects)
@@ -80,7 +81,7 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
     }
     
     @objc func addNewRoute(_ sender:UIBarButtonItem) -> Void {
-        performSegue(withIdentifier: "addNewRoute", sender: nil)
+        performSegue(withIdentifier: "addRouteController", sender: nil)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -90,7 +91,7 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let data = self.getDataToLoadTable() {
             if data.count == 0 {
-            CommonBusinessRules.showNotFoundView(notFoundView: self.notFoundView!)
+                CommonBusinessRules.showNotFoundView(notFoundView: self.notFoundView!)
                 return 0
             } else {
                 self.tableView.backgroundView = nil
@@ -125,7 +126,9 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
                 
                 self.allRoutes = RouteBusinessRules.getObjectAllRoutes(routeObject: ObjectBusinessRules.selectedObject!)
                 
+                self.tableView.beginUpdates()
                 self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
+                self.tableView.endUpdates()
             }
             
             CommonBusinessRules.showTwoButtonsAlert(controllerInPresented: self, alertTitle: "Удаление маршрута", alertMessage: "Удалить этот маршрут?", okButtonHandler: okHandler, cancelButtonHandler: nil)
@@ -135,7 +138,8 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
         deleteAction.backgroundColor = SettingsBusinessRules.colors[0]
         
         let editAction = UIContextualAction(style: .normal, title:  "Изменить\nмаршрут", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
-            
+            self.swipedCellIndexPath = indexPath
+            self.performSegue(withIdentifier: "addRouteController", sender: nil)
             success(true)
         })
         editAction.backgroundColor = SettingsBusinessRules.colors[4]
@@ -151,13 +155,32 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
         if let routes = RouteBusinessRules.getObjectAllRoutes(routeObject: ObjectBusinessRules.selectedObject!) {
             pointsViewController.title = (routes[indexPath.row].value(forKeyPath: "name") as? String)?.uppercased()
         }
+        
         pointsViewController.view.tag = 1
         self.navigationController?.pushViewController(pointsViewController, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addRouteController" {
+            if let controller = segue.destination as? RouteViewController {
+                
+                if self.swipedCellIndexPath == nil {
+                    controller.isEdit = false
+                } else {
+                    let cell = self.tableView.cellForRow(at: self.swipedCellIndexPath!)
+                    controller.isEdit = true
+                    controller.title = "ИЗМЕНЕНИЕ МАРШРУТА"
+                    controller.routeToEditName = cell?.textLabel?.text
+                    controller.routeToEditDescription = cell?.detailTextLabel?.text
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.notFoundView.removeFromSuperview()
+        self.notFoundView.isHidden = true
     }
 }

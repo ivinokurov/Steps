@@ -39,12 +39,38 @@ class RouteBusinessRules: NSObject {
             do {
                 let fetchResult = try viewContext!.fetch(fetchRequest) as! [NSManagedObject]
                 if fetchResult.count > 0 {
-                    (object.mutableSetValue(forKey: "objectRoutes")).remove(fetchResult.first!)
-                    viewContext!.delete(fetchResult.first!)
-                    try viewContext!.save()
+                    for route in fetchResult {
+                        if route.value(forKey: "object") as! NSManagedObject == object {
+                            (object.mutableSetValue(forKey: "objectRoutes")).remove(fetchResult.first!)
+                            viewContext!.delete(fetchResult.first!)
+                            try viewContext!.save()
+                            break
+                        }
+                    }
                 }
             } catch let error as NSError {
                 NSLog("Ошибка удаления сущности Routes: " + error.localizedDescription)
+            }
+        }
+    }
+    
+    class func changeRoute(routeObject object: NSManagedObject, originRouteName originName: String, originRouteDescription originDesc: String?, newRouteName newName: String, newRouteDescription newDesc: String?) {
+        let viewContext = CommonBusinessRules.getManagedView()
+        if viewContext != nil {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Routes")
+            fetchRequest.predicate = NSPredicate(format: "name == %@ AND desc = %@", argumentArray: [originName, originDesc as Any])
+            do {
+                let fetchResult = try viewContext!.fetch(fetchRequest) as! [NSManagedObject]
+                if fetchResult.count > 0 {
+                    let object = fetchResult.first
+                    (ObjectBusinessRules.selectedObject!.mutableSetValue(forKey: "objectRoutes")).remove(object as Any)
+                    object!.setValue(newName, forKey: "name")
+                    object!.setValue(newDesc, forKey: "desc")
+                    (ObjectBusinessRules.selectedObject!.mutableSetValue(forKey: "objectRoutes")).add(object as Any)
+                    try viewContext!.save()
+                }
+            } catch let error as NSError {
+                NSLog("Ошибка изменения сущности Routes: " + error.localizedDescription)
             }
         }
     }

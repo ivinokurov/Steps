@@ -147,36 +147,42 @@ class CommonBusinessRules {
     }
     
     class func addNotFoundView(notFoundView: UIView, controller: UIViewController) {
-        if UIDevice.current.orientation.isLandscape {
-            notFoundView.frame.size.width = controller.view.frame.height
-        } else {
-            notFoundView.frame.size.width = controller.view.frame.width
-        }
-        
-        if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
-            notFoundView.center = window.center
-            notFoundView.backgroundColor = .clear
-            notFoundView.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
-            notFoundView.translatesAutoresizingMaskIntoConstraints = true
-            window.addSubview(notFoundView)
-            notFoundView.alpha = 0.0
-            UIView.animate(withDuration: 0.6, animations: {
-                notFoundView.alpha = 1.0
-            })
+        DispatchQueue.main.async {
+            if UIDevice.current.orientation.isLandscape {
+                notFoundView.frame.size.width = controller.view.frame.height
+            } else {
+                notFoundView.frame.size.width = controller.view.frame.width
+            }
+            
+            if let app = UIApplication.shared.delegate as? AppDelegate, let window = app.window {
+                notFoundView.center = window.center
+                notFoundView.backgroundColor = .clear
+                notFoundView.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+                notFoundView.translatesAutoresizingMaskIntoConstraints = true
+                window.addSubview(notFoundView)
+                notFoundView.alpha = 0.0
+                UIView.animate(withDuration: 0.6, animations: {
+                    notFoundView.alpha = 1.0
+                })
+            }
         }
     }
     
     class func hideNotFoundView(notFoundView: UIView) {
-        UIView.animate(withDuration: 0.6, animations: {
-            notFoundView.isHidden = true
-            notFoundView.alpha = 0.0
-        })
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.6, animations: {
+                notFoundView.alpha = 0.0
+                notFoundView.isHidden = true
+            })
+        }
     }
     
     class func showNotFoundView(notFoundView: UIView) {
-        UIView.animate(withDuration: 0.6, animations: {
-            notFoundView.isHidden = false
-            notFoundView.alpha = 1.0
-        })
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.6, animations: {
+                notFoundView.alpha = 1.0
+                notFoundView.isHidden = false
+            })
+        }
     }
 }

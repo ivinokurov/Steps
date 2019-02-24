@@ -108,9 +108,9 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         CommonBusinessRules.tabbedRootController!.selectTabBarItem(itemIndex: 0)
         CommonBusinessRules.tabbedRootController!.selectedIndex = 0
+        CommonBusinessRules.addNotFoundView(notFoundView: self.notFoundView, controller: self)
         
         self.mapView.removeAnnotations(self.objectsOnMap)
         self.objectsOnMap.removeAll()
@@ -154,12 +154,11 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
         }
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
         self.dropDownView.dropDownViewIsDisplayed = false
-        self.dropDownView.hideDropDownView()
-        
         self.notFoundView.removeFromSuperview()
+        self.notFoundView.isHidden = true
     }
 }

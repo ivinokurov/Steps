@@ -5,9 +5,11 @@
 
 
 import UIKit
+import CoreData
 
 class MovementBusinessRules {
     
-    static var objectOnMapTitle: String?
-    static var objectOnMapDescription: String?
+    static var objectToMoveTitle: String?
+    static var objectToMoveDescription: String?
+    static var objectToMove: NSManagedObject?
 }

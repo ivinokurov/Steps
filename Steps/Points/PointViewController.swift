@@ -9,15 +9,15 @@ import CoreMotion
 import MapKit
 
 extension String {
-    var htmlToAttributedString: NSAttributedString? {
+    var htmlToAttributedString: NSMutableAttributedString? {
         guard let data = data(using: .utf8)
             else {
-                return NSAttributedString()
+                return NSMutableAttributedString()
         }
         do {
-            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue], documentAttributes: nil)
+            return try NSMutableAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue], documentAttributes: nil)
         } catch {
-            return NSAttributedString()
+            return NSMutableAttributedString()
         }
     }
 }

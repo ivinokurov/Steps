@@ -43,9 +43,9 @@ class DropDownView {
     }
 
     func hideDropDownView() {
-        if let title = MovementBusinessRules.objectOnMapTitle {
+        if let title = MovementBusinessRules.objectToMoveTitle {
             if ObjectBusinessRules.isObjectHasPoints(name: title) == false {
-                CommonBusinessRules.showNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)
+            //    CommonBusinessRules.showNotFoundView(notFoundView: (self.movementViewController?.notFoundView)!)
             }
         } else {
              self.movementViewController?.notFoundView.isHidden = false

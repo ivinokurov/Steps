@@ -106,8 +106,9 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeCellId", for: indexPath)
-
-        cell.textLabel!.attributedText = RouteBusinessRules.createTitltString(objectRoute:  (self.getDataToLoadTable()?[indexPath.row])!).htmlToAttributedString
+        
+        cell.textLabel!.attributedText = CommonBusinessRules.trancateAttributedString(attributedString: RouteBusinessRules.createTitltString(objectRoute: (self.getDataToLoadTable()?[indexPath.row])!).htmlToAttributedString!)
+        
         cell.detailTextLabel!.text = self.getDataToLoadTable()?[indexPath.row].value(forKeyPath: "desc") as? String
 
         CommonBusinessRules.setCellSelectedColor(cellToSetSelectedColor: cell)
@@ -173,6 +174,8 @@ class RoutesTableViewController: UITableViewController, UISearchResultsUpdating,
                     controller.routeToEditName = cell?.textLabel?.text
                     controller.routeToEditDescription = cell?.detailTextLabel?.text
                 }
+                
+                self.swipedCellIndexPath = nil
             }
         }
     }

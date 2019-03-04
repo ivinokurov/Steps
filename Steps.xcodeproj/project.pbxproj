@@ -27,6 +27,7 @@
 		EAC1B88421DB44FA0029A44C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAC1B88221DB44FA0029A44C /* LaunchScreen.storyboard */; };
 		EAC1B88C21DB61010029A44C /* ObjectsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC1B88B21DB61010029A44C /* ObjectsTableViewController.swift */; };
 		EAC1B88E21DB62710029A44C /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC1B88D21DB62710029A44C /* ObjectViewController.swift */; };
+		EACCFC40222C1B3F00CAEB81 /* RouteNamesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACCFC3F222C1B3F00CAEB81 /* RouteNamesCollectionViewCell.swift */; };
 		EAF866EA21DFBDF200779DC8 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF866E921DFBDF100779DC8 /* SplitViewController.swift */; };
 		EAF866EC21E0962F00779DC8 /* PointBusinessRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF866EB21E0962F00779DC8 /* PointBusinessRules.swift */; };
 		EAF866EE21E203CE00779DC8 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF866ED21E203CD00779DC8 /* SettingsTableViewController.swift */; };
@@ -58,6 +59,7 @@
 		EAC1B88521DB44FA0029A44C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAC1B88B21DB61010029A44C /* ObjectsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsTableViewController.swift; sourceTree = "<group>"; };
 		EAC1B88D21DB62710029A44C /* ObjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
+		EACCFC3F222C1B3F00CAEB81 /* RouteNamesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteNamesCollectionViewCell.swift; sourceTree = "<group>"; };
 		EAF866E921DFBDF100779DC8 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		EAF866EB21E0962F00779DC8 /* PointBusinessRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointBusinessRules.swift; sourceTree = "<group>"; };
 		EAF866ED21E203CD00779DC8 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				EAAF3C1F21EF0B6500159A31 /* ObjectsOnMapView.swift */,
 				EAF866F121E2229200779DC8 /* MovementViewController.swift */,
 				EA228F34220325C000402012 /* MovementBusinessRules.swift */,
+				EACCFC3F222C1B3F00CAEB81 /* RouteNamesCollectionViewCell.swift */,
 			);
 			path = Movement;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				EAC1B87721DB44F80029A44C /* AppDelegate.swift in Sources */,
 				EAC1B87F21DB44F80029A44C /* Steps.xcdatamodeld in Sources */,
 				EAB8D78221DF2DC300550E13 /* PointsTableViewController.swift in Sources */,
+				EACCFC40222C1B3F00CAEB81 /* RouteNamesCollectionViewCell.swift in Sources */,
 				EAAF3C1E21EF081400159A31 /* ObjectOnMap.swift in Sources */,
 				EAB8D77821DCD6B400550E13 /* RoutesTableViewController.swift in Sources */,
 				EAF866EA21DFBDF200779DC8 /* SplitViewController.swift in Sources */,

@@ -28,6 +28,18 @@ extension UIView {
     }
 }
 
+extension String {
+    func truncate(length: Int, trailing: String? = "...") -> String {
+        if self.count > length {
+            let start = self.startIndex
+            let end = self.index(self.startIndex, offsetBy: length)
+            return String(self[start..<end]) + (trailing ?? "")
+        } else {
+            return self
+        }
+    }
+}
+
 class CommonBusinessRules {
     
     static let bkgColor = UIColor.orange
@@ -184,5 +196,14 @@ class CommonBusinessRules {
                 notFoundView.isHidden = false
             })
         }
+    }
+    
+    class func trancateAttributedString(attributedString: NSMutableAttributedString) -> NSMutableAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        
+        let range = NSRange(location: 0, length: attributedString.mutableString.length)
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
+        return attributedString
     }
 }

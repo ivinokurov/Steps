@@ -103,7 +103,8 @@ class ObjectsTableViewController: UITableViewController, UIBarPositioningDelegat
 
         let object = self.getDataToLoadTable()?[indexPath.row]
         
-        cell.textLabel!.attributedText = ObjectBusinessRules.createTitleString(object: object!).htmlToAttributedString
+        cell.textLabel!.attributedText = CommonBusinessRules.trancateAttributedString(attributedString: ObjectBusinessRules.createTitleString(object: object!).htmlToAttributedString!)
+        
         cell.detailTextLabel!.text = object!.value(forKeyPath: "desc") as? String
         
         CommonBusinessRules.setCellSelectedColor(cellToSetSelectedColor: cell)

@@ -77,8 +77,9 @@ class PointsTableViewController: UITableViewController {
         }
         
         cell.imageView?.image = CommonBusinessRules.createBorderedImage()
+        
+        cell.textLabel!.attributedText = CommonBusinessRules.trancateAttributedString(attributedString: PointBusinessRules.createTitltString(routePoint: point).htmlToAttributedString!)
 
-        cell.textLabel!.attributedText = PointBusinessRules.createTitltString(routePoint: point).htmlToAttributedString
         cell.detailTextLabel!.attributedText = PointBusinessRules.createDetailString(routePoint: point).htmlToAttributedString
         
         CommonBusinessRules.setCellSelectedColor(cellToSetSelectedColor: cell)
@@ -102,7 +103,40 @@ class PointsTableViewController: UITableViewController {
         })
         deleteAction.backgroundColor = SettingsBusinessRules.colors[0]
         
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        let editAction = UIContextualAction(style: .normal, title:  "Переименовать\nточку", handler: { (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+            
+            let point = PointBusinessRules.allRoutePoints![indexPath.row]
+            
+            self.renameRoutePoint(pointName: point.value(forKey: "name") as! String)
+            success(true)
+        })
+        editAction.backgroundColor = SettingsBusinessRules.colors[4]
+        
+        return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
+    }
+    
+    func renameRoutePoint(pointName: String) {
+        let alertController = UIAlertController(title: "Точка: " + pointName, message: "Введите новое название точки", preferredStyle: .alert)
+        
+        alertController.addTextField (configurationHandler: {(textField: UITextField!) in
+            textField.placeholder = "Название точки"
+        })
+
+        let changeAction = UIAlertAction(title: "Изменить", style: UIAlertAction.Style.default, handler: { (paramAction:UIAlertAction!) in
+                if let textFields = alertController.textFields {
+                //    let theTextFields = textFields as [UITextField]
+                //    let enteredText = theTextFields[0].text
+                //    self!.displayLabel.text = enteredText
+                }
+        })
+        
+        let dismissAction = UIAlertAction(title: "Отменить", style: UIAlertAction.Style.destructive, handler: { (paramAction:UIAlertAction!) in
+            alertController.dismiss(animated: true, completion: nil)
+        })
+        
+        alertController.addAction(changeAction)
+        alertController.addAction(dismissAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -122,11 +156,9 @@ class PointsTableViewController: UITableViewController {
             PointBusinessRules.allRoutePoints = PointBusinessRules.getRouteAllPointsWithMarker(objectRoute: RouteBusinessRules.selectedRoute!)
         }
         
-     //   DispatchQueue.global(qos: .background).async {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-     //   }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

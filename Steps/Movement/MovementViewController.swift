@@ -17,7 +17,7 @@ extension MovementViewController: MKMapViewDelegate {
     }
 }
 
-class MovementViewController: UIViewController, UIPopoverPresentationControllerDelegate, CLLocationManagerDelegate {
+class MovementViewController: UIViewController, UIPopoverPresentationControllerDelegate, CLLocationManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource  {
     
     let locationManager = CLLocationManager()
     var objectsOnMap: [ObjectOnMap] = []
@@ -27,6 +27,7 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
     
     @IBOutlet var notFoundView: UIView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var routeNamesCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,9 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
         self.mapView.isHidden = true
         self.dropDownView.movementViewController = self
         self.addDropDownView()
+        
+        self.routeNamesCollectionView.dataSource = self
+        self.routeNamesCollectionView.delegate = self
     }
     
     func addDropDownView() {
@@ -122,6 +126,8 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
         
         self.dropDownView.removeDropDownView()
         self.showOrHideDropDown()
+        
+        self.routeNamesCollectionView.reloadData()
     }
     
     @objc func selectBuildingToRouteIn(_ sender: UIBarButtonItem) -> Void {
@@ -160,5 +166,59 @@ class MovementViewController: UIViewController, UIPopoverPresentationControllerD
         self.dropDownView.dropDownViewIsDisplayed = false
         self.notFoundView.removeFromSuperview()
         self.notFoundView.isHidden = true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let selectedObject = MovementBusinessRules.objectToMove {
+            return (RouteBusinessRules.getObjectAllRoutes(routeObject: selectedObject)?.count)!
+        }
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "routeNameCellId", for: indexPath) as! RouteNamesCollectionViewCell
+        
+        let routeNames = RouteBusinessRules.getObjectAllRoutes(routeObject: MovementBusinessRules.objectToMove!)
+        
+        self.decorateCollectionViewCell(cellToDecorate: cell)
+        
+        cell.routeNameLabel.text = routeNames![indexPath.row].value(forKeyPath: "name") as? String
+        
+        let description = routeNames![indexPath.row].value(forKeyPath: "desc") as? String
+        if description != "" {
+            cell.routeDescriptionLabel.text = description
+        } else {
+            cell.routeDescriptionLabel.text = "[Описание отсутствует]"
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        self.decorateCollectionViewCellWhileSelect(cellToDecorate: cell! as! RouteNamesCollectionViewCell)
+    }
+    
+    func decorateCollectionViewCell(cellToDecorate cell: RouteNamesCollectionViewCell) {
+        cell.layer.borderWidth = 0.4
+        cell.layer.cornerRadius = 4
+        cell.layer.borderColor = CommonBusinessRules.bkgColor.cgColor
+        cell.backgroundColor = CommonBusinessRules.bkgColor.withAlphaComponent(0.8)
+        cell.routeNameLabel.textColor = .white
+        cell.routeDescriptionLabel.textColor = .white
+    }
+    
+    func decorateCollectionViewCellWhileSelect(cellToDecorate cell: RouteNamesCollectionViewCell) {
+        UIView.animate(withDuration: 0.4, animations: { () -> Void in
+            cell.backgroundColor = CommonBusinessRules.bkgColor.withAlphaComponent(0.2)
+        //    cell.routeNameLabel.textColor = .black
+        //    cell.routeDescriptionLabel.textColor = .black
+        }, completion: {Bool -> Void in
+            UIView.animate(withDuration: 0.4, animations: { () -> Void in
+                cell.backgroundColor = CommonBusinessRules.bkgColor.withAlphaComponent(0.8)
+            //    cell.routeNameLabel.textColor = .white
+            //    cell.routeDescriptionLabel.textColor = .white
+            })
+        })
     }
 }

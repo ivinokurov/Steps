@@ -109,9 +109,7 @@ class ObjectBusinessRules: NSObject {
                     if let routePoints = PointBusinessRules.getRouteAllPoints(objectRoute: route) {
                         if routePoints.count > 0 {
                             return true
-                        } else {
-                            return false
-                        }
+                        } 
                     }
                 }
             }

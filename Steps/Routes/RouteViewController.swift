@@ -28,7 +28,7 @@ class RouteViewController: UIViewController {
         CommonBusinessRules.customizeNavigationBar(coloredController: self)
         CommonBusinessRules.addTextEditPlaceholder(placeholderTextField: self.routeNameTextField, placeholderText: "Название маршрута")
         
-        self.routeNameTextField.addTarget(nil, action:Selector(("firstResponderAction:")), for: .editingDidEndOnExit)
+        self.routeNameTextField.addTarget(nil, action: Selector(("firstResponderAction:")), for: .editingDidEndOnExit)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +61,7 @@ class RouteViewController: UIViewController {
             if !RouteBusinessRules.isTheSameRoutePresents(routeObject: ObjectBusinessRules.selectedObject!, routeName: name, routeDescription: desc) {
                 if self.isEdit {
                     RouteBusinessRules.changeRoute(routeObject: ObjectBusinessRules.selectedObject!, originRouteName: self.removeRouteNameTail(routeName: self.routeToEditName!), originRouteDescription: self.routeToEditDescription, newRouteName: name, newRouteDescription: desc)
+                    self.isEdit = false
                 } else {
                     RouteBusinessRules.addNewRoute(objectToAddRoute: ObjectBusinessRules.selectedObject!, routeName: name, routeDescription: desc)
                 }
